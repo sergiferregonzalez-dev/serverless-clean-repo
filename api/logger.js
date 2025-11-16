@@ -1,29 +1,38 @@
 // api/logger.js
 
 export default async (req, res) => {
-    // Vercel proporciona la ciudad y el país en estos encabezados especiales
-    const city = req.headers['x-vercel-ip-city'] || 'Unknown City';
-    const country = req.headers['x-vercel-ip-country'] || 'Unknown Country';
     
-    // La IP real o proxy. En este caso, será la IP del servidor que llamó a track.js
-    // Si track.js no reenvía la IP del cliente (ver track.js), esta será la IP de Vercel.
-    const ipAddress = req.headers['x-forwarded-for'] || 'N/A';
+    // 1. Obtener la IP del cliente (la real) desde el encabezado reenviado por track.js
+    const clientIp = req.headers['x-forwarded-for'] || 'N/A';
     
-    // Si quieres la IP que Vercel cree que es la real del cliente (cuando es la primera petición)
-    const clientIp = req.headers['x-real-ip'] || ipAddress;
+    // 2. Usar un servicio de geolocalización de terceros (¡requiere FETCH!)
+    let location = 'Unknown Location';
 
+    if (clientIp !== 'N/A') {
+        try {
+            // Ejemplo usando ipinfo.io (sin clave API)
+            const geoResponse = await fetch(`https://ipinfo.io/${clientIp}/json`);
+            const geoData = await geoResponse.json();
+            
+            // Formatear la ubicación
+            location = `${geoData.city || geoData.region} (${geoData.country})`;
+        } catch (error) {
+            console.error('Error fetching geolocation:', error);
+            // Si falla la geolocalización, volvemos a usar la de Vercel como fallback (Ashburn)
+            const city = req.headers['x-vercel-ip-city'] || 'Unknown City';
+            const country = req.headers['x-vercel-ip-country'] || 'Unknown Country';
+            location = `${city} (${country}) [Vercel Fallback]`;
+        }
+    }
+    
     const logEntry = {
         timestamp: new Date().toISOString(),
-        ip: clientIp, 
-        location: `${city} (${country})`, 
+        ip: clientIp, // <-- AHORA USA LA IP REAL
+        location: location, // <-- AHORA USA LA UBICACIÓN REAL
         userAgent: req.headers['user-agent'] || 'N/A',
         method: req.method,
-        // Puedes agregar más datos si los envías en el body (ej. key presses)
     };
 
-    // Esto guarda la entrada en los logs de tu despliegue de Vercel.
     console.log(`[LOG_ENTRY] ${JSON.stringify(logEntry)}`);
-
-    // Devolver un código 200 con un JSON
     res.status(200).json(logEntry);
 };
