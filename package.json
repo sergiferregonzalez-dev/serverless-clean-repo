@@ -3,9 +3,5 @@
   "version": "1.0.0",
   "description": "Función Serverless de prueba",
   "main": "api/logger.js",
-  "type": "module",
-  "dependencies": {
-    "geoip-lite": "1.4.6",
-    "@vercel/functions": "^1.2.0" 
-  }
+  "type": "module"
 }
