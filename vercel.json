@@ -1,12 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/logger",
-      "destination": "/api/logger.js"
-    },
-    {
-      "source": "/visita",
-      "destination": "/api/logger.js"
+      "source": "/api/track",
+      "destination": "/api/track.js"
     }
   ]
 }
