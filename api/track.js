@@ -2,7 +2,7 @@
 
 export default async (req, res) => {
     // 1. Usamos la URL del dominio personalizado, con la ruta de la función
-    const loggerUrl = 'https://monitor-seguro.vercel.app/api/logger'; 
+    const loggerUrl = 'https://serverless-clean-repo.vercel.app/api/logger'; 
     
     // 2. Encabezados para asegurar que la IP y el User-Agent del usuario se pasen correctamente
     const headersToSend = {
