@@ -4,13 +4,7 @@
   "description": "Función Serverless de prueba",
   "main": "api/logger.js",
   "type": "module",
-  "scripts": {
-    "start": "vercel dev"
-  },
   "dependencies": {
-    "ip-city": "^1.0.0" 
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "geoip-lite": "1.4.6"
   }
 }
