@@ -1,4 +1,4 @@
-﻿{
+{
   "functions": {
     "api/logger.js": {
       "runtime": "nodejs20.x"
@@ -11,3 +11,7 @@
     }
   ]
 }
+<<<<<<< HEAD
+=======
+// Despliegue final
+>>>>>>> 362cf298807909ab34e5d639a43ee2fa57abf059
