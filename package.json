@@ -1,0 +1,8 @@
+{
+  "name": "simple-logger-app",
+  "version": "1.0.0",
+  "description": "Función Serverless de prueba",
+  "scripts": {
+    "start": "node api/logger.js"
+  }
+}
