@@ -5,6 +5,6 @@
   "main": "api/logger.js",
   "type": "module",
   "dependencies": {
-    "ip-city": "^1.0.0"
+    "ip-city": "1.0.0" 
   }
 }
