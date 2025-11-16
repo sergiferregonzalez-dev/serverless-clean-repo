@@ -3,6 +3,10 @@
     {
       "source": "/api/logger",
       "destination": "/api/logger.js"
+    },
+    {
+      "source": "/visita",
+      "destination": "/api/logger.js"
     }
   ]
 }
