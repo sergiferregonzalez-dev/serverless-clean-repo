@@ -1,9 +1,7 @@
 {
-  "name": "simple-logger-app",
+  "name": "serverless-logger-final",
   "version": "1.0.0",
-  "description": "Funcion Serverless de prueba",
-  "scripts": {
-    "start": "node api/logger.js"
-  },
-  "build": "echo 'No build step required'" 
+  "description": "Función Serverless de prueba",
+  "main": "api/logger.js",
+  "type": "module"
 }
