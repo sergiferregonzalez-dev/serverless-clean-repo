@@ -1,4 +1,4 @@
-{
+﻿{
   "functions": {
     "api/logger.js": {
       "runtime": "nodejs18.x"
