@@ -1,7 +1,11 @@
 // api/logger.js (En el repositorio del LOGGER)
 
-import { log } from '@vercel/functions';
-// Cambiamos a geoip-lite, que es más estable en Vercel.
+// *** CORRECCIÓN DE IMPORTACIÓN PARA COMPATIBILIDAD CON COMMONJS ***
+import pkg from '@vercel/functions';
+const { log } = pkg;
+// ******************************************************************
+
+// Importamos la librería de geolocalización
 import geoip from 'geoip-lite'; 
 
 export default async (req, res) => {
@@ -31,6 +35,7 @@ export default async (req, res) => {
     };
 
     // 4. Loguear la información en los logs de Vercel
+    // Usamos la función 'log' obtenida de pkg
     log(logEntry);
 
     // 5. Devolver el JSON (solo si se accede directamente a la función)
