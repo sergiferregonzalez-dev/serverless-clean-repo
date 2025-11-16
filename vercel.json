@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/logger.js": {
-      "runtime": "nodejs20.x"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/logger",
