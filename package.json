@@ -2,6 +2,5 @@
   "name": "serverless-logger-final",
   "version": "1.0.0",
   "description": "Función Serverless de prueba",
-  "main": "api/logger.js",
   "type": "module"
 }
