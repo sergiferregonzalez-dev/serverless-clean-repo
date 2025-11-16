@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/logger.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/logger",
+      "destination": "/api/logger.js"
+    }
+  ]
+}
