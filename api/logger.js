@@ -21,7 +21,6 @@ export default async (req, res) => {
     const logEntry = {
         timestamp: new Date().toISOString(),
         ip: ipAddress || 'N/A',
-        // Formato: Ciudad (País)
         location: `${geo.city || 'Unknown'} (${geo.country || 'Unknown'})`, 
         userAgent: req.headers['user-agent'] || 'N/A',
         method: req.method,
