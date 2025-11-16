@@ -3,7 +3,7 @@
 export default async (req, res) => {
     // 1. URL completa del logger en el otro proyecto (serverless-clean-repo, renombrado)
     // **¡IMPORTANTE! Reemplaza [TU-NUEVO-NOMBRE].vercel.app con la URL real de tu logger.**
-    const loggerUrl = 'https://[TU-NUEVO-NOMBRE].vercel.app/api/logger'; 
+    const loggerUrl = 'https://mirprimeraweb2025.com.vercel.app/api/logger'; 
     
     // 2. Encabezados para asegurar que la IP y el User-Agent del usuario se pasen correctamente
     const headersToSend = {
