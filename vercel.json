@@ -1,4 +1,3 @@
-// vercel.json (Para usar el runtime de Node 20)
 {
   "functions": {
     "api/**/*.js": { "runtime": "nodejs20.x" }
