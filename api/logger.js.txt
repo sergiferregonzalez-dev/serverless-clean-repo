@@ -1,0 +1,4 @@
+logger/  <-- Carpeta Principal
+├── api/
+│   └── logger.js  <-- Tu código de función Serverless
+└── package.json   <-- (Opcional, pero recomendado)
