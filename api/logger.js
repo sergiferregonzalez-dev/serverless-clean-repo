@@ -1,43 +1,26 @@
 // api/logger.js (En el repositorio del LOGGER)
 
-// *** CORRECCIÓN DE IMPORTACIÓN PARA COMPATIBILIDAD CON COMMONJS ***
-import pkg from '@vercel/functions';
-const { log } = pkg;
-// ******************************************************************
-
-// Importamos la librería de geolocalización
-import geoip from 'geoip-lite'; 
+// Este código no necesita librerías externas y simplemente loguea
+// la IP que Vercel ve de tu solicitud.
 
 export default async (req, res) => {
-    // 1. Obtener la IP real del cliente desde el encabezado que envía el proxy.
-    const ipAddress = req.headers['x-forwarded-for'];
+    
+    // Vercel establece la IP real en este encabezado. Si no la encuentra, 
+    // usa la IP del servidor de Vercel (la de Virginia).
+    const ip = req.headers['x-forwarded-for'] || 'N/A';
 
-    // 2. Intentar obtener la geolocalización
-    let geo = null;
-    let location = 'Unknown';
-    if (ipAddress) {
-        // Usamos geoip-lite para obtener la ubicación del cliente
-        geo = geoip.lookup(ipAddress);
-        
-        if (geo) {
-            // Formato: Ciudad (País)
-            location = `${geo.city || 'Unknown'} (${geo.country || 'Unknown'})`;
-        }
-    }
-
-    // 3. Crear el objeto de log
     const logEntry = {
         timestamp: new Date().toISOString(),
-        ip: ipAddress || 'N/A',
-        location: location, 
+        ip: ip,
+        // Al no usar geoip-lite, la ubicación será inexacta (Virginia)
+        location: 'Inaccurate (Virginia/Vercel Server)', 
         userAgent: req.headers['user-agent'] || 'N/A',
         method: req.method,
     };
 
-    // 4. Loguear la información en los logs de Vercel
-    // Usamos la función 'log' obtenida de pkg
-    log(logEntry);
+    // Imprimir el log directamente en la consola de Vercel (Logs)
+    console.log(JSON.stringify(logEntry));
 
-    // 5. Devolver el JSON (solo si se accede directamente a la función)
+    // Devolver el JSON (sólo si se accede directamente a la función)
     res.status(200).json(logEntry);
 };
