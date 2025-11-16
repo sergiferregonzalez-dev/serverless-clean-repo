@@ -1,19 +1,23 @@
 // api/logger.js (En el repositorio del LOGGER)
 
 import { log } from '@vercel/functions';
-import ipCity from 'ip-city'; 
+// Cambiamos a geoip-lite, que es más estable en Vercel.
+import geoip from 'geoip-lite'; 
 
 export default async (req, res) => {
     // 1. Obtener la IP real del cliente desde el encabezado que envía el proxy.
     const ipAddress = req.headers['x-forwarded-for'];
 
     // 2. Intentar obtener la geolocalización
-    let geo = { city: 'Unknown', country: 'Unknown' };
+    let geo = null;
+    let location = 'Unknown';
     if (ipAddress) {
-        try {
-            geo = ipCity.lookup(ipAddress);
-        } catch (e) {
-            console.error("Error al buscar ciudad/país:", e);
+        // Usamos geoip-lite para obtener la ubicación del cliente
+        geo = geoip.lookup(ipAddress);
+        
+        if (geo) {
+            // Formato: Ciudad (País)
+            location = `${geo.city || 'Unknown'} (${geo.country || 'Unknown'})`;
         }
     }
 
@@ -21,8 +25,7 @@ export default async (req, res) => {
     const logEntry = {
         timestamp: new Date().toISOString(),
         ip: ipAddress || 'N/A',
-        // Formato: Ciudad (País)
-        location: `${geo.city || 'Unknown'} (${geo.country || 'Unknown'})`, 
+        location: location, 
         userAgent: req.headers['user-agent'] || 'N/A',
         method: req.method,
     };
