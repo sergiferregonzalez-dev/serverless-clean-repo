@@ -1,28 +1,29 @@
-// api/track.js (En tu sitio web principal)
+// api/track.js (En el repositorio de tu SITIO WEB PRINCIPAL)
 
 export default async (req, res) => {
-    // URL completa del logger secreto
-    const loggerUrl = 'https://serverless-clean-repo.vercel.app/visita';
+    // 1. URL completa del logger en el otro proyecto (serverless-clean-repo, renombrado)
+    // **¡IMPORTANTE! Reemplaza [TU-NUEVO-NOMBRE].vercel.app con la URL real de tu logger.**
+    const loggerUrl = 'https://[TU-NUEVO-NOMBRE].vercel.app/api/logger'; 
     
-    // Encabezados para pasar la IP y el navegador del usuario
+    // 2. Encabezados para asegurar que la IP y el User-Agent del usuario se pasen correctamente
     const headersToSend = {
-        'x-forwarded-for': req.headers['x-forwarded-for'] || '',
+        'x-forwarded-for': req.headers['x-forwarded-for'] || '', // Pasa la IP real del visitante
         'user-agent': req.headers['user-agent'] || ''
     };
 
     try {
-        // Hacemos la petición al logger de Vercel desde el SERVIDOR
-        // El navegador del usuario NO VE esta URL.
+        // 3. Hacemos la llamada al logger desde el SERVIDOR (invisible al usuario)
         const response = await fetch(loggerUrl, {
             method: 'GET',
             headers: headersToSend
         });
         
-        // Devolvemos una respuesta vacía (204) para que el navegador no muestre nada
+        // 4. Devolvemos un código 204 (No Content) al navegador del usuario.
+        // Esto confirma que la petición se completó sin errores, pero NO envía el JSON del logger.
         res.status(204).end(); 
 
     } catch (error) {
-        // En caso de error, también devolvemos un 204
+        // Si hay algún problema (ej. logger caído), devolvemos 204 para no mostrar errores al usuario
         console.error('Error al hacer proxy al logger:', error);
         res.status(204).end();
     }
